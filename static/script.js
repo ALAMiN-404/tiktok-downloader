@@ -1,4 +1,6 @@
 let hdVideoUrl = null;
+let mp4VideoUrl = null;
+let mp3AudioUrl = null;
 
 async function downloadVideo() {
     const url = document.getElementById("tiktokLink").value.trim();
@@ -26,24 +28,14 @@ async function downloadVideo() {
 
         if (data.success) {
             hdVideoUrl = data.hd_video_url;
-            // Directly trigger downloads for SD and audio
-            if (data.video_url) {
-                const sdLink = document.createElement("a");
-                sdLink.href = data.video_url;
-                sdLink.download = "";
-                sdLink.target = "_blank";
-                sdLink.click();
-            }
-            if (data.audio_url) {
-                const audioLink = document.createElement("a");
-                audioLink.href = data.audio_url;
-                audioLink.download = "";
-                audioLink.target = "_blank";
-                audioLink.click();
-            }
+            mp4VideoUrl = data.video_url;
+            mp3AudioUrl = data.audio_url;
             resultDiv.innerHTML = `
-                <p>Downloads started!</p>
-                <a href="#" onclick="showHdAd()">Download Video (HD)</a>
+                <p>Choose your download format:</p>
+                ${data.thumbnail ? `<img src="${data.thumbnail}" alt="Video Preview">` : ""}
+                <a href="#" onclick="downloadMp4()">Download MP4 (SD)</a>
+                <a href="#" onclick="downloadMp3()">Download MP3</a>
+                <a href="#" onclick="showHdAd()">Download HD</a>
             `;
         } else {
             resultDiv.innerHTML = `<p style='color: red;'>Error: ${data.error}</p>`;
@@ -51,6 +43,26 @@ async function downloadVideo() {
     } catch (error) {
         console.error("Error:", error);
         resultDiv.innerHTML = `<p style='color: red;'>Error: ${error.message}. Try again!</p>`;
+    }
+}
+
+function downloadMp4() {
+    if (mp4VideoUrl) {
+        const link = document.createElement("a");
+        link.href = mp4VideoUrl;
+        link.download = "";
+        link.target = "_blank";
+        link.click();
+    }
+}
+
+function downloadMp3() {
+    if (mp3AudioUrl) {
+        const link = document.createElement("a");
+        link.href = mp3AudioUrl;
+        link.download = "";
+        link.target = "_blank";
+        link.click();
     }
 }
 
