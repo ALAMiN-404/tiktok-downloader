@@ -1,25 +1,51 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>টিকটক ভিডিও ডাউনলোডার</title>
+    <title>SnipTok - TikTok Video Downloader</title>
     <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
-<body>
+<body onload="showPopupAd()">
     <header>
-        <h1>টিকটক ভিডিও ডাউনলোডার</h1>
+        <img src="/static/icons/logo.svg" alt="SnipTok Logo" class="logo">
         <nav>
-            <a href="/static/index.html">হোম</a>
-            <a href="/static/about.html">আমাদের সম্পর্কে</a>
-            <a href="/static/terms.html">শর্তাবলী</a>
+            <a href="/static/index.html">Home</a>
+            <a href="/static/about.html">About</a>
+            <a href="/static/terms.html">Terms</a>
         </nav>
     </header>
     <div class="container">
-        <p>টিকটক ভিডিও URL পেস্ট করুন এবং ওয়াটারমার্ক ছাড়া ডাউনলোড করুন!</p>
-        <input type="text" id="tiktokLink" placeholder="টিকটক ভিডিও লিঙ্ক পেস্ট করুন">
-        <button onclick="downloadVideo()">ডাউনলোড</button>
-        <div id="result"></div>
+        <section class="hero">
+            <h2>Download TikTok Videos Instantly</h2>
+            <p>Paste your TikTok video URL and download in HD, SD, or MP3 format without watermarks!</p>
+            <div class="input-group">
+                <input type="text" id="tiktokLink" placeholder="Paste TikTok Video URL">
+                <button onclick="downloadVideo()">Download</button>
+            </div>
+            <div id="result"></div>
+        </section>
+        <section class="features">
+            <h2>Why SnipTok?</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <img src="/static/icons/hd-download.svg" alt="HD Download Icon">
+                    <h3>HD Video Download</h3>
+                    <p>Download TikTok videos in high-definition for stunning quality.</p>
+                </div>
+                <div class="feature-card">
+                    <img src="/static/icons/audio-download.svg" alt="Audio Download Icon">
+                    <h3>Audio Extraction</h3>
+                    <p>Extract MP3 audio from TikTok videos for music lovers.</p>
+                </div>
+                <div class="feature-card">
+                    <img src="/static/icons/watermark-free.svg" alt="Watermark-Free Icon">
+                    <h3>Watermark-Free</h3>
+                    <p>Download clean videos without TikTok watermarks.</p>
+                </div>
+            </div>
+        </section>
         <!-- Google AdSense -->
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
                 crossorigin="anonymous"></script>
@@ -32,11 +58,49 @@
         <script>
             (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
-        <p class="disclaimer">ডিসক্লেইমার: শুধুমাত্র ব্যক্তিগত ব্যবহারের জন্য ভিডিও ডাউনলোড করুন। কপিরাইট আইন মানুন।</p>
+        <!-- Popup Ad -->
+        <div id="popupAd" class="popup-ad">
+            <div class="popup-content">
+                <span class="close-popup" onclick="closePopupAd()">&times;</span>
+                <p>Advertisement</p>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                     data-ad-slot="YYYYYYYYYY"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+        <!-- HD Download Ad Overlay -->
+        <div id="hdAdOverlay" class="ad-overlay">
+            <div class="ad-content">
+                <p>Watch this 30-second ad to download in HD!</p>
+                <div id="adTimer">30</div>
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                     data-ad-slot="YYYYYYYYYY"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+                <button id="skipAd" disabled>Skip Ad (Wait <span id="skipTimer">30</span>s)</button>
+            </div>
+        </div>
     </div>
     <footer>
-        <p>&copy; 2025 টিকটক ডাউনলোডার। সর্বস্বত্ব সংরক্ষিত।</p>
+        <p>&copy; 2025 SnipTok. All Rights Reserved.</p>
+        <nav>
+            <a href="/static/about.html">About</a> |
+            <a href="/static/terms.html">Terms</a> |
+            <a href="mailto:support@sniptok.com">Contact</a>
+        </nav>
     </footer>
     <script src="/static/script.js"></script>
+    <script src="/static/ads.js"></script>
 </body>
 </html>
