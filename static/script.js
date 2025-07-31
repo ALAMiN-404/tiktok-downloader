@@ -1,48 +1,40 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-.container {
-    text-align: center;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
-    width: 90%;
-}
-h1 {
-    color: #C70039; /* লাল রঙ */
-}
-input {
-    padding: 10px;
-    width: 80%;
-    max-width: 400px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-button {
-    padding: 10px 20px;
-    background-color: #C70039;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-button:hover {
-    background-color: #900C3F;
-}
-#result {
-    margin-top: 20px;
-    color: #333;
-}
-ins.adsbygoogle {
-    margin-top: 20px;
+async function downloadVideo() {
+    const url = document.getElementById("tiktokLink").value.trim();
+    const resultDiv = document.getElementById("result");
+    
+    if (!url) {
+        resultDiv.innerHTML = "<p style='color: red;'>দয়া করে একটি বৈধ টিকটক লিঙ্ক দিন!</p>";
+        return;
+    }
+
+    resultDiv.innerHTML = "<p>ডাউনলোড হচ্ছে, দয়া করে অপেক্ষা করুন...</p>";
+
+    try {
+        const response = await fetch("/download", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ url })
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP ত্রুটি: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.success) {
+            resultDiv.innerHTML = `
+                <p>ডাউনলোড লিঙ্ক তৈরি হয়েছে!</p>
+                ${data.thumbnail ? `<img src="${data.thumbnail}" alt="Video Preview">` : ""}
+                <a href="${data.video_url}" target="_blank" download>ভিডিও ডাউনলোড (ওয়াটারমার্ক ছাড়া)</a><br>
+                ${data.hd_video_url ? `<a href="${data.hd_video_url}" target="_blank" download>এইচডি ভিডিও ডাউনলোড</a><br>` : ""}
+                <a href="${data.audio_url}" target="_blank" download>অডিও ডাউনলোড (MP3)</a>
+            `;
+        } else {
+            resultDiv.innerHTML = `<p style='color: red;'>ত্রুটি: ${data.error}</p>`;
+        }
+    } catch (error) {
+        console.error("ত্রুটি:", error);
+        resultDiv.innerHTML = `<p style='color: red;'>ত্রুটি: ${error.message}. আবার চেষ্টা করুন!</p>`;
+    }
 }
