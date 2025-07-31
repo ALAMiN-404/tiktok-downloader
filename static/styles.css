@@ -11,28 +11,20 @@ header {
     background-color: #ffffff;
     padding: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    position: fixed; /* Fixed header */
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    text-align: center;
 }
 .logo {
     width: 40px;
     height: 40px;
 }
-nav a {
-    margin: 0 15px;
-    color: #007bff;
-    text-decoration: none;
-    font-size: 16px;
-    transition: color 0.3s;
-}
-nav a:hover {
-    color: #0056b3;
-}
 .container {
     max-width: 90%;
     width: 700px;
-    margin: 20px auto;
+    margin: 80px auto 20px; /* Adjusted for fixed header */
     flex-grow: 1;
 }
 .hero {
@@ -116,15 +108,25 @@ button:hover {
     color: #333;
     font-size: 14px;
 }
+#result img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-top: 10px;
+}
 #result a {
     color: #007bff;
     text-decoration: none;
     font-weight: bold;
     display: inline-block;
-    margin: 5px 0;
+    margin: 5px 10px;
+    padding: 10px 20px;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    transition: background-color 0.3s;
 }
 #result a:hover {
-    text-decoration: underline;
+    background-color: #007bff;
+    color: white;
 }
 .popup-ad {
     display: none;
@@ -215,18 +217,6 @@ footer nav a {
     to { transform: translateY(0); opacity: 1; }
 }
 @media (max-width: 600px) {
-    header {
-        flex-direction: column;
-        gap: 10px;
-    }
-    .logo {
-        width: 30px;
-        height: 30px;
-    }
-    nav a {
-        font-size: 14px;
-        margin: 0 10px;
-    }
     .container {
         width: 95%;
     }
