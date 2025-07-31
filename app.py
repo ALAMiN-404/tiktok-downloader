@@ -1,11 +1,17 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import requests
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/")
 def index():
     return app.send_static_file("index.html")
+
+@app.route("/static/<path:path>")
+def serve_static(path):
+    return app.send_static_file(path)
 
 @app.route("/download", methods=["POST"])
 def download():
@@ -15,25 +21,58 @@ def download():
     if not tiktok_url:
         return jsonify({"success": False, "error": "কোনো URL দেওয়া হয়নি!"})
 
+    # প্রথমে TikWM API চেষ্টা করা
     try:
-        # TikWM API ব্যবহার করে ভিডিও ডাউনলোড
         api_url = "https://tikwm.com/api/"
-        payload = {"url": tiktok_url, "hd": 1}  # HD কোয়ালিটি
+        payload = {"url": tiktok_url, "hd": 1}
         headers = {
             "Content-Type": "application/json",
-            "Accept": "application/json"
+            "Accept": "application/json",
+            "User-Agent": "Mozilla/5.0"
         }
         response = requests.post(api_url, json=payload, headers=headers, timeout=10)
+        response.raise_for_status()
         result = response.json()
 
         if result.get("code") == 0:
-            video_url = result["data"].get("play")  # ওয়াটারমার্ক ছাড়া ভিডিও
-            audio_url = result["data"].get("music")  # MP3 অডিও
-            return jsonify({"success": True, "video_url": video_url, "audio_url": audio_url})
-        else:
-            return jsonify({"success": False, "error": "ভিডিও ডাউনলোড করা যায়নি। URL চেক করুন!"})
+            video_url = result["data"].get("play")
+            hd_video_url = result["data"].get("hdplay")
+            audio_url = result["data"].get("music")
+            thumbnail = result["data"].get("cover")
+            if not video_url:
+                raise ValueError("ভিডিও লিঙ্ক পাওয়া যায়নি")
+            return jsonify({
+                "success": True,
+                "video_url": video_url,
+                "hd_video_url": hd_video_url,
+                "audio_url": audio_url,
+                "thumbnail": thumbnail
+            })
     except Exception as e:
-        return jsonify({"success": False, "error": f"ত্রুটি: {str(e)}"})
+        print(f"TikWM ত্রুটি: {str(e)}")
+        # TikWM ব্যর্থ হলে ssstik.io API চেষ্টা করা
+        try:
+            api_url = "https://ssstik.io/abc?url=dl"
+            payload = {"id": tiktok_url}
+            headers = {"User-Agent": "Mozilla/5.0"}
+            response = requests.post(api_url, data=payload, headers=headers, timeout=10)
+            response.raise_for_status()
+            result = response.json()
+
+            if result.get("success"):
+                video_url = result.get("result", {}).get("nowatermark")
+                audio_url = result.get("result", {}).get("music")
+                thumbnail = result.get("result", {}).get("thumbnail")
+                return jsonify({
+                    "success": True,
+                    "video_url": video_url,
+                    "audio_url": audio_url,
+                    "thumbnail": thumbnail
+                })
+            else:
+                return jsonify({"success": False, "error": "ssstik.io থেকে ডাউনলোড ব্যর্থ"})
+        except Exception as e2:
+            return jsonify({"success": False, "error": f"TikWM এবং ssstik.io ব্যর্থ: {str(e2)}"})
 
 if __name__ == "__main__":
     app.run(debug=True)
