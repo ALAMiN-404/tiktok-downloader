@@ -19,9 +19,9 @@ def download():
     tiktok_url = data.get("url")
 
     if not tiktok_url:
-        return jsonify({"success": False, "error": "কোনো URL দেওয়া হয়নি!"})
+        return jsonify({"success": False, "error": "No URL provided!"})
 
-    # প্রথমে TikWM API চেষ্টা করা
+    # Try TikWM API
     try:
         api_url = "https://tikwm.com/api/"
         payload = {"url": tiktok_url, "hd": 1}
@@ -38,19 +38,17 @@ def download():
             video_url = result["data"].get("play")
             hd_video_url = result["data"].get("hdplay")
             audio_url = result["data"].get("music")
-            thumbnail = result["data"].get("cover")
             if not video_url:
-                raise ValueError("ভিডিও লিঙ্ক পাওয়া যায়নি")
+                raise ValueError("Video link not found")
             return jsonify({
                 "success": True,
                 "video_url": video_url,
                 "hd_video_url": hd_video_url,
-                "audio_url": audio_url,
-                "thumbnail": thumbnail
+                "audio_url": audio_url
             })
     except Exception as e:
-        print(f"TikWM ত্রুটি: {str(e)}")
-        # TikWM ব্যর্থ হলে ssstik.io API চেষ্টা করা
+        print(f"TikWM Error: {str(e)}")
+        # Fallback to ssstik.io API
         try:
             api_url = "https://ssstik.io/abc?url=dl"
             payload = {"id": tiktok_url}
@@ -62,17 +60,15 @@ def download():
             if result.get("success"):
                 video_url = result.get("result", {}).get("nowatermark")
                 audio_url = result.get("result", {}).get("music")
-                thumbnail = result.get("result", {}).get("thumbnail")
                 return jsonify({
                     "success": True,
                     "video_url": video_url,
-                    "audio_url": audio_url,
-                    "thumbnail": thumbnail
+                    "audio_url": audio_url
                 })
             else:
-                return jsonify({"success": False, "error": "ssstik.io থেকে ডাউনলোড ব্যর্থ"})
+                return jsonify({"success": False, "error": "ssstik.io download failed"})
         except Exception as e2:
-            return jsonify({"success": False, "error": f"TikWM এবং ssstik.io ব্যর্থ: {str(e2)}"})
+            return jsonify({"success": False, "error": f"TikWM and ssstik.io failed: {str(e2)}"})
 
 if __name__ == "__main__":
     app.run(debug=True)
