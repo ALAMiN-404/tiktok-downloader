@@ -7,8 +7,15 @@
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-    <div class="container">
+    <header>
         <h1>টিকটক ভিডিও ডাউনলোডার</h1>
+        <nav>
+            <a href="/static/index.html">হোম</a>
+            <a href="/static/about.html">আমাদের সম্পর্কে</a>
+            <a href="/static/terms.html">শর্তাবলী</a>
+        </nav>
+    </header>
+    <div class="container">
         <p>টিকটক ভিডিও URL পেস্ট করুন এবং ওয়াটারমার্ক ছাড়া ডাউনলোড করুন!</p>
         <input type="text" id="tiktokLink" placeholder="টিকটক ভিডিও লিঙ্ক পেস্ট করুন">
         <button onclick="downloadVideo()">ডাউনলোড</button>
@@ -25,8 +32,11 @@
         <script>
             (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
-        <p style="font-size: 12px; margin-top: 20px;">ডিসক্লেইমার: শুধুমাত্র ব্যক্তিগত ব্যবহারের জন্য ভিডিও ডাউনলোড করুন। কপিরাইট আইন মানুন।</p>
+        <p class="disclaimer">ডিসক্লেইমার: শুধুমাত্র ব্যক্তিগত ব্যবহারের জন্য ভিডিও ডাউনলোড করুন। কপিরাইট আইন মানুন।</p>
     </div>
+    <footer>
+        <p>&copy; 2025 টিকটক ডাউনলোডার। সর্বস্বত্ব সংরক্ষিত।</p>
+    </footer>
     <script src="/static/script.js"></script>
 </body>
 </html>
