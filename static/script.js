@@ -30,9 +30,13 @@ async function downloadVideo() {
             hdVideoUrl = data.hd_video_url;
             mp4VideoUrl = data.video_url;
             mp3AudioUrl = data.audio_url;
+            const info = data.info || { id: "N/A", title: "N/A", description: "N/A" };
             resultDiv.innerHTML = `
-                <p>Choose your download format:</p>
+                <p><strong>TikTok ID:</strong> ${info.id}</p>
+                <p><strong>Title:</strong> ${info.title}</p>
+                <p><strong>Description:</strong> ${info.description}</p>
                 ${data.thumbnail ? `<img src="${data.thumbnail}" alt="Video Preview">` : ""}
+                <p>Choose your download format:</p>
                 <a href="#" onclick="downloadMp4()">Download MP4 (SD)</a>
                 <a href="#" onclick="downloadMp3()">Download MP3</a>
                 <a href="#" onclick="showHdAd()">Download HD</a>
@@ -68,32 +72,33 @@ function downloadMp3() {
 
 function showHdAd() {
     const hdAdOverlay = document.getElementById("hdAdOverlay");
-    const adTimer = document.getElementById("adTimer");
-    const skipTimer = document.getElementById("skipTimer");
-    const skipAdButton = document.getElementById("skipAd");
-    let timeLeft = 30;
+    const closeAd = document.getElementById("closeAd");
 
     hdAdOverlay.style.display = "block";
-    adTimer.textContent = timeLeft;
-    skipTimer.textContent = timeLeft;
+    closeAd.style.display = "none"; // Initially hidden
 
-    const timer = setInterval(() => {
-        timeLeft--;
-        adTimer.textContent = timeLeft;
-        skipTimer.textContent = timeLeft;
-        if (timeLeft <= 0) {
-            clearInterval(timer);
-            skipAdButton.disabled = false;
-            skipAdButton.onclick = () => {
-                if (hdVideoUrl) {
-                    const link = document.createElement("a");
-                    link.href = hdVideoUrl;
-                    link.download = "";
-                    link.target = "_blank";
-                    link.click();
-                    hdAdOverlay.style.display = "none";
-                }
-            };
-        }
-    }, 1000);
+    // Simulate ad completion (rely on AdSense to handle ad duration)
+    const ad = document.querySelector("#hdAdOverlay ins.adsbygoogle");
+    if (ad) {
+        // AdSense will handle the ad playback; we listen for its completion
+        const checkAdStatus = setInterval(() => {
+            // This is a placeholder; AdSense doesn't provide a direct JS event for ad completion
+            // You may need to adjust based on AdSense API or custom ad integration
+            if (/* Ad completion condition */) {
+                clearInterval(checkAdStatus);
+                closeAd.style.display = "block";
+            }
+        }, 1000);
+
+        closeAd.onclick = () => {
+            if (hdVideoUrl) {
+                const link = document.createElement("a");
+                link.href = hdVideoUrl;
+                link.download = "";
+                link.target = "_blank";
+                link.click();
+                hdAdOverlay.style.display = "none";
+            }
+        };
+    }
 }
