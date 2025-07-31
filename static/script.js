@@ -21,7 +21,7 @@ async function downloadVideo() {
         });
 
         if (!response.ok) {
-            throw new Error(`HTTP Error: ${response.status}`);
+            throw new Error(`HTTP Error: ${response.status} - ${response.statusText}`);
         }
 
         const data = await response.json();
@@ -45,8 +45,8 @@ async function downloadVideo() {
             resultDiv.innerHTML = `<p style='color: red;'>Error: ${data.error}</p>`;
         }
     } catch (error) {
-        console.error("Error:", error);
-        resultDiv.innerHTML = `<p style='color: red;'>Error: ${error.message}. Try again!</p>`;
+        console.error("Fetch Error:", error);
+        resultDiv.innerHTML = `<p style='color: red;'>Error: ${error.message}. Check console for details.</p>`;
     }
 }
 
@@ -77,14 +77,13 @@ function showHdAd() {
     hdAdOverlay.style.display = "block";
     closeAd.style.display = "none"; // Initially hidden
 
-    // Simulate ad completion (rely on AdSense to handle ad duration)
     const ad = document.querySelector("#hdAdOverlay ins.adsbygoogle");
     if (ad) {
-        // AdSense will handle the ad playback; we listen for its completion
         const checkAdStatus = setInterval(() => {
-            // This is a placeholder; AdSense doesn't provide a direct JS event for ad completion
-            // You may need to adjust based on AdSense API or custom ad integration
-            if (/* Ad completion condition */) {
+            // Placeholder: Replace with actual AdSense ad completion event if available
+            // This is a workaround; adjust based on AdSense documentation
+            const adIframe = document.querySelector("#hdAdOverlay ins iframe");
+            if (adIframe && !adIframe.style.display && !closeAd.style.display) {
                 clearInterval(checkAdStatus);
                 closeAd.style.display = "block";
             }
