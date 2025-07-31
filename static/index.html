@@ -9,7 +9,10 @@
 </head>
 <body onload="showPopupAd()">
     <header>
-        <img src="/static/icons/logo.svg" alt="SnipTok Logo" class="logo">
+        <div class="header-content">
+            <img src="/static/icons/logo.svg" alt="SnipTok Logo" class="logo">
+            <h1 class="site-title">SnipTok</h1>
+        </div>
     </header>
     <div class="container">
         <section class="hero">
@@ -72,8 +75,7 @@
         <!-- HD Download Ad Overlay -->
         <div id="hdAdOverlay" class="ad-overlay">
             <div class="ad-content">
-                <p>Watch this 30-second ad to download in HD!</p>
-                <div id="adTimer">30</div>
+                <p>Watch this ad to download in HD!</p>
                 <ins class="adsbygoogle"
                      style="display:block"
                      data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
@@ -83,7 +85,7 @@
                 <script>
                     (adsbygoogle = window.adsbygoogle || []).push({});
                 </script>
-                <button id="skipAd" disabled>Skip Ad (Wait <span id="skipTimer">30</span>s)</button>
+                <span id="closeAd" class="close-ad" style="display: none;">&times;</span>
             </div>
         </div>
     </div>
