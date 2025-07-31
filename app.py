@@ -21,6 +21,8 @@ def download():
     if not tiktok_url:
         return jsonify({"success": False, "error": "No URL provided!"})
 
+    print(f"Processing URL: {tiktok_url}")  # Debug log
+
     # Try TikWM API
     try:
         api_url = "https://tikwm.com/api/"
@@ -46,6 +48,7 @@ def download():
             }
             if not video_url:
                 raise ValueError("Video link not found")
+            print("TikWM Success")  # Debug log
             return jsonify({
                 "success": True,
                 "video_url": video_url,
@@ -55,7 +58,7 @@ def download():
                 "info": info
             })
     except Exception as e:
-        print(f"TikWM Error: {str(e)}")
+        print(f"TikWM Error: {str(e)}")  # Debug log
         # Fallback to ssstik.io API
         try:
             api_url = "https://ssstik.io/abc?url=dl"
@@ -74,6 +77,7 @@ def download():
                     "title": result.get("result", {}).get("title", "N/A"),
                     "description": result.get("result", {}).get("description", "N/A")
                 }
+                print("ssstik.io Success")  # Debug log
                 return jsonify({
                     "success": True,
                     "video_url": video_url,
@@ -82,8 +86,10 @@ def download():
                     "info": info
                 })
             else:
+                print(f"ssstik.io Error: {result.get('error', 'Unknown error')}")  # Debug log
                 return jsonify({"success": False, "error": "ssstik.io download failed"})
         except Exception as e2:
+            print(f"ssstik.io Error: {str(e2)}")  # Debug log
             return jsonify({"success": False, "error": f"TikWM and ssstik.io failed: {str(e2)}"})
 
 if __name__ == "__main__":
