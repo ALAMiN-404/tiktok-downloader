@@ -84,19 +84,35 @@ header.dark-mode {
     justify-content: center;
     align-items: center;
     margin-top: 20px;
+    max-width: 600px; /* ফুল উইথ সীমিত */
+    margin-left: auto;
+    margin-right: auto;
 }
 input {
     padding: 12px;
     width: 100%;
-    max-width: 400px;
     border: 2px solid #007bff;
     border-radius: 8px;
     font-size: 16px;
     outline: none;
+    box-sizing: border-box;
 }
 input:focus {
     border-color: #00c4ff;
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+#pasteClearBtn {
+    padding: 12px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+#pasteClearBtn:hover {
+    background-color: #218838;
 }
 button {
     padding: 12px 30px;
@@ -107,6 +123,7 @@ button {
     font-size: 16px;
     cursor: pointer;
     transition: transform 0.2s, background-color 0.3s;
+    flex: 1; /* Input-এর সাথে সামঞ্জস্য */
 }
 button:hover {
     background-color: #0056b3;
@@ -264,6 +281,7 @@ footer.dark-mode nav a {
     }
     .search-bar {
         flex-direction: column;
+        gap: 10px;
     }
     .site-title {
         font-size: 28px;
