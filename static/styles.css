@@ -6,10 +6,15 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    transition: background 0.3s, color 0.3s;
+}
+body.dark-mode {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    color: #ffffff;
 }
 header {
     background-color: #ffffff;
-    padding: 15px;
+    padding: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
@@ -17,41 +22,33 @@ header {
     z-index: 1000;
     text-align: center;
 }
-.header-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-.logo {
-    width: 40px;
-    height: 40px;
+header.dark-mode {
+    background-color: #1a1a2e;
 }
 .site-title {
     color: #007bff;
-    font-size: 24px;
+    font-size: 36px;
     margin: 0;
-    font-weight: 600;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+.site-title.dark-mode {
+    color: #00c4ff;
 }
 .container {
     max-width: 90%;
     width: 700px;
-    margin: 80px auto 20px;
+    margin: 100px auto 20px;
     flex-grow: 1;
 }
-.hero {
-    text-align: center;
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    animation: fadeIn 1s ease-in;
-}
-.input-group {
+.search-bar {
     display: flex;
     gap: 10px;
     justify-content: center;
     align-items: center;
+    margin-top: 20px;
 }
 input {
     padding: 12px;
@@ -80,6 +77,21 @@ button:hover {
     background-color: #0056b3;
     transform: scale(1.05);
 }
+.share-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.share-btn:hover {
+    background-color: #218838;
+}
 .features {
     text-align: center;
     background-color: #ffffff;
@@ -87,7 +99,10 @@ button:hover {
     border-radius: 15px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     margin-top: 20px;
-    animation: fadeIn 1.5s ease-in;
+    animation: fadeIn 1s ease-in;
+}
+.features.dark-mode {
+    background-color: #2a2a3a;
 }
 .feature-grid {
     display: grid;
@@ -100,6 +115,9 @@ button:hover {
     border-radius: 10px;
     transition: transform 0.3s;
 }
+.feature-card.dark-mode {
+    background: #33334d;
+}
 .feature-card:hover {
     transform: translateY(-5px);
 }
@@ -111,14 +129,23 @@ button:hover {
     color: #007bff;
     font-size: 18px;
 }
+.feature-card.dark-mode h3 {
+    color: #00c4ff;
+}
 .feature-card p {
     color: #555;
     font-size: 14px;
+}
+.feature-card.dark-mode p {
+    color: #cccccc;
 }
 #result {
     margin-top: 20px;
     color: #333;
     font-size: 14px;
+}
+#result.dark-mode {
+    color: #ffffff;
 }
 #result img {
     max-width: 100%;
@@ -128,20 +155,29 @@ button:hover {
 #result p {
     margin: 5px 0;
 }
-#result a {
+#result .download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
     color: #007bff;
     text-decoration: none;
     font-weight: bold;
-    display: inline-block;
-    margin: 5px 10px;
     padding: 10px 20px;
     border: 2px solid #007bff;
     border-radius: 5px;
     transition: background-color 0.3s;
 }
-#result a:hover {
+#result .download-btn:hover {
     background-color: #007bff;
     color: white;
+}
+#result .download-btn i {
+    font-size: 16px;
+}
+#result .download-btn.ad-icon::before {
+    content: url('/static/icons/ad-icon.svg');
+    width: 16px;
+    height: 16px;
 }
 .popup-ad {
     display: none;
@@ -164,6 +200,9 @@ button:hover {
     position: relative;
     animation: slideIn 0.5s ease;
 }
+.popup-content.dark-mode {
+    background: #2a2a3a;
+}
 .close-popup {
     position: absolute;
     top: 10px;
@@ -171,7 +210,7 @@ button:hover {
     font-size: 20px;
     cursor: pointer;
 }
-.ad-overlay {
+.ad-popup {
     display: none;
     position: fixed;
     top: 0;
@@ -191,6 +230,9 @@ button:hover {
     text-align: center;
     position: relative;
 }
+.ad-content.dark-mode {
+    background: #2a2a3a;
+}
 .close-ad {
     position: absolute;
     top: 10px;
@@ -198,6 +240,7 @@ button:hover {
     font-size: 20px;
     cursor: pointer;
     color: #007bff;
+    display: none;
 }
 ins.adsbygoogle {
     margin: 20px auto;
@@ -211,9 +254,22 @@ footer {
     font-size: 12px;
     margin-top: auto;
 }
+footer.dark-mode {
+    background-color: #1a1a2e;
+    color: #cccccc;
+}
 footer nav a {
     margin: 0 10px;
     color: #007bff;
+}
+footer.dark-mode nav a {
+    color: #00c4ff;
+}
+.theme-toggle {
+    margin-top: 10px;
+}
+.theme-toggle input {
+    margin-right: 5px;
 }
 @keyframes fadeIn {
     from { opacity: 0; }
@@ -227,17 +283,10 @@ footer nav a {
     .container {
         width: 95%;
     }
-    .input-group {
+    .search-bar {
         flex-direction: column;
-    }
-    .feature-grid {
-        grid-template-columns: 1fr;
-    }
-    .header-content {
-        flex-direction: column;
-        gap: 5px;
     }
     .site-title {
-        font-size: 20px;
+        font-size: 28px;
     }
-}
+    }
