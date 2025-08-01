@@ -100,3 +100,34 @@ function toggleDarkMode() {
     document.querySelector(".features").classList.toggle("dark-mode");
     document.querySelector("footer").classList.toggle("dark-mode");
 }
+
+// Paste/Clear Button Functionality
+document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("tiktokLink");
+    const pasteClearBtn = document.getElementById("pasteClearBtn");
+
+    function updateButtonText() {
+        if (input.value.trim() === "") {
+            pasteClearBtn.textContent = "Paste";
+        } else {
+            pasteClearBtn.textContent = "Clear";
+        }
+    }
+
+    pasteClearBtn.addEventListener("click", () => {
+        if (pasteClearBtn.textContent === "Paste") {
+            navigator.clipboard.readText().then(text => {
+                if (text) {
+                    input.value = text;
+                    updateButtonText();
+                }
+            }).catch(err => console.error("Clipboard access error:", err));
+        } else if (pasteClearBtn.textContent === "Clear") {
+            input.value = "";
+            updateButtonText();
+        }
+    });
+
+    input.addEventListener("input", updateButtonText);
+    updateButtonText(); // Initial check
+});
