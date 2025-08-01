@@ -30,9 +30,13 @@ async function downloadVideo() {
             hdVideoUrl = data.hd_video_url;
             mp4VideoUrl = data.video_url;
             mp3AudioUrl = data.audio_url;
+            const info = data.info || { id: "N/A", title: "N/A", description: "N/A" };
             resultDiv.innerHTML = `
-                <p>Choose your download format:</p>
+                <p><strong>TikTok ID:</strong> ${info.id}</p>
+                <p><strong>Title:</strong> ${info.title}</p>
+                <p><strong>Description:</strong> ${info.description}</p>
                 ${data.thumbnail ? `<img src="${data.thumbnail}" alt="Video Preview">` : ""}
+                <p>Choose your download format:</p>
                 <a href="#" onclick="downloadMp4()">Download MP4 (SD)</a>
                 <a href="#" onclick="downloadMp3()">Download MP3</a>
                 <a href="#" onclick="showHdAd()">Download HD</a>
