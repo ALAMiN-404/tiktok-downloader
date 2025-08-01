@@ -11,20 +11,32 @@ header {
     background-color: #ffffff;
     padding: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    position: fixed; /* Fixed header */
+    position: fixed;
     top: 0;
     width: 100%;
     z-index: 1000;
     text-align: center;
 }
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
 .logo {
     width: 40px;
     height: 40px;
 }
+.site-title {
+    color: #007bff;
+    font-size: 24px;
+    margin: 0;
+    font-weight: 600;
+}
 .container {
     max-width: 90%;
     width: 700px;
-    margin: 80px auto 20px; /* Adjusted for fixed header */
+    margin: 80px auto 20px;
     flex-grow: 1;
 }
 .hero {
@@ -112,6 +124,9 @@ button:hover {
     max-width: 100%;
     border-radius: 8px;
     margin-top: 10px;
+}
+#result p {
+    margin: 5px 0;
 }
 #result a {
     color: #007bff;
@@ -225,5 +240,12 @@ footer nav a {
     }
     .feature-grid {
         grid-template-columns: 1fr;
+    }
+    .header-content {
+        flex-direction: column;
+        gap: 5px;
+    }
+    .site-title {
+        font-size: 20px;
     }
 }
