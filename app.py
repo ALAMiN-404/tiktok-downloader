@@ -38,13 +38,21 @@ def download():
             video_url = result["data"].get("play")
             hd_video_url = result["data"].get("hdplay")
             audio_url = result["data"].get("music")
+            thumbnail = result["data"].get("cover")
+            info = {
+                "id": result["data"].get("id", "N/A"),
+                "title": result["data"].get("title", "N/A"),
+                "description": result["data"].get("desc", "N/A")
+            }
             if not video_url:
                 raise ValueError("Video link not found")
             return jsonify({
                 "success": True,
                 "video_url": video_url,
                 "hd_video_url": hd_video_url,
-                "audio_url": audio_url
+                "audio_url": audio_url,
+                "thumbnail": thumbnail,
+                "info": info
             })
     except Exception as e:
         print(f"TikWM Error: {str(e)}")
@@ -60,10 +68,18 @@ def download():
             if result.get("success"):
                 video_url = result.get("result", {}).get("nowatermark")
                 audio_url = result.get("result", {}).get("music")
+                thumbnail = result.get("result", {}).get("thumbnail")
+                info = {
+                    "id": result.get("result", {}).get("id", "N/A"),
+                    "title": result.get("result", {}).get("title", "N/A"),
+                    "description": result.get("result", {}).get("description", "N/A")
+                }
                 return jsonify({
                     "success": True,
                     "video_url": video_url,
-                    "audio_url": audio_url
+                    "audio_url": audio_url,
+                    "thumbnail": thumbnail,
+                    "info": info
                 })
             else:
                 return jsonify({"success": False, "error": "ssstik.io download failed"})
