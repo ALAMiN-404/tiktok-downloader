@@ -77,7 +77,6 @@ function showHdAd() {
     const ad = document.getElementById("hdAd");
 
     hdAdPopup.style.display = "block";
-    closeAd.style.display = "none";
     adCompleted = false;
 
     // Simulate ad completion (adjust based on AdSense API)
@@ -85,7 +84,7 @@ function showHdAd() {
         const adIframe = document.querySelector("#hdAdPopup ins iframe");
         if (adIframe && !adIframe.style.display && adCompleted) {
             clearInterval(checkAdStatus);
-            closeAd.style.display = "block";
+            closeAd.style.display = "block"; // Already visible, no change needed
         }
     }, 1000);
 
@@ -108,6 +107,7 @@ function showHdAd() {
             }
         } else {
             alert("Please watch the ad fully to download!");
+            // Do not close the popup if ad is not completed
         }
     };
 }
@@ -128,6 +128,7 @@ function toggleDarkMode() {
     document.body.classList.toggle("dark-mode");
     document.querySelector("header").classList.toggle("dark-mode");
     document.querySelector(".container").classList.toggle("dark-mode");
+    document.querySelector(".hero").classList.toggle("dark-mode");
     document.querySelector(".features").classList.toggle("dark-mode");
     document.querySelector(".popup-content").classList.toggle("dark-mode");
     document.querySelector(".ad-content").classList.toggle("dark-mode");
