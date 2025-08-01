@@ -46,7 +46,7 @@ async function downloadVideo() {
         }
     } catch (error) {
         console.error("Fetch Error:", error);
-        resultDiv.innerHTML = `<p style='color: red;'>Error: ${error.message}. Check console for details.</p>`;
+        resultDiv.innerHTML = `<p style='color: red;'>Error: ${error.message}. Please try again later.</p>`;
     }
 }
 
@@ -62,7 +62,6 @@ function shareLink() {
     }
 }
 
-// Paste/Clear Button Functionality
 document.addEventListener("DOMContentLoaded", () => {
     const input = document.getElementById("tiktokLink");
     const pasteClearBtn = document.getElementById("pasteClearBtn");
@@ -90,5 +89,5 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     input.addEventListener("input", updateButtonText);
-    updateButtonText(); // Initial check
+    updateButtonText();
 });
