@@ -21,73 +21,79 @@ async function downloadVideo() {
         });
 
         if (!response.ok) {
-            throw new Error(`HTTP Error: ${response.status} - ${response.statusText}`);
+            throw new Error(`HTTP Error: ${response.status}`);
         }
 
         const data = await response.json();
 
         if (data.success) {
-            hdVideoUrl = data.hd_video_url || null;
-            mp4VideoUrl = data.video_url || null;
-            mp3AudioUrl = data.audio_url || null;
-            const info = data.info || { title: "N/A", description: "N/A" };
+            hdVideoUrl = data.hd_video_url;
+            mp4VideoUrl = data.video_url;
+            mp3AudioUrl = data.audio_url;
             resultDiv.innerHTML = `
-                <p><strong>TikTok Name:</strong> ${info.title || "N/A"}</p>
-                <p><strong>Description:</strong> ${info.description || "N/A"}</p>
-                ${data.thumbnail ? `<img src="${data.thumbnail}" alt="Video Preview">` : ""}
                 <p>Choose your download format:</p>
-                ${mp4VideoUrl ? `<a href="${mp4VideoUrl}" class="download-btn" download><i class="fas fa-video"></i> Download MP4 (SD)</a>` : ""}
-                ${mp3AudioUrl ? `<a href="${mp3AudioUrl}" class="download-btn" download><i class="fas fa-music"></i> Download MP3</a>` : ""}
-                ${hdVideoUrl ? `<a href="${hdVideoUrl}" class="download-btn" download><i class="fas fa-hd"></i> Download HD</a>` : ""}
-                ${!mp4VideoUrl && !mp3AudioUrl && !hdVideoUrl ? "<p style='color: red;'>No downloadable content available.</p>" : ""}
+                ${data.thumbnail ? `<img src="${data.thumbnail}" alt="Video Preview">` : ""}
+                <a href="#" onclick="downloadMp4()">Download MP4 (SD)</a>
+                <a href="#" onclick="downloadMp3()">Download MP3</a>
+                <a href="#" onclick="showHdAd()">Download HD</a>
             `;
         } else {
             resultDiv.innerHTML = `<p style='color: red;'>Error: ${data.error}</p>`;
         }
     } catch (error) {
-        console.error("Fetch Error:", error);
-        resultDiv.innerHTML = `<p style='color: red;'>Error: ${error.message}. Please try again later.</p>`;
+        console.error("Error:", error);
+        resultDiv.innerHTML = `<p style='color: red;'>Error: ${error.message}. Try again!</p>`;
     }
 }
 
-function shareLink() {
-    if (navigator.share) {
-        navigator.share({
-            title: "SnipTok",
-            text: "Download TikTok videos easily with SnipTok!",
-            url: window.location.href
-        }).catch(console.error);
-    } else {
-        alert("Sharing not supported on this device.");
+function downloadMp4() {
+    if (mp4VideoUrl) {
+        const link = document.createElement("a");
+        link.href = mp4VideoUrl;
+        link.download = "";
+        link.target = "_blank";
+        link.click();
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    const input = document.getElementById("tiktokLink");
-    const pasteClearBtn = document.getElementById("pasteClearBtn");
-
-    function updateButtonText() {
-        if (input.value.trim() === "") {
-            pasteClearBtn.textContent = "Paste";
-        } else {
-            pasteClearBtn.textContent = "Clear";
-        }
+function downloadMp3() {
+    if (mp3AudioUrl) {
+        const link = document.createElement("a");
+        link.href = mp3AudioUrl;
+        link.download = "";
+        link.target = "_blank";
+        link.click();
     }
+}
 
-    pasteClearBtn.addEventListener("click", () => {
-        if (pasteClearBtn.textContent === "Paste") {
-            navigator.clipboard.readText().then(text => {
-                if (text) {
-                    input.value = text;
-                    updateButtonText();
+function showHdAd() {
+    const hdAdOverlay = document.getElementById("hdAdOverlay");
+    const adTimer = document.getElementById("adTimer");
+    const skipTimer = document.getElementById("skipTimer");
+    const skipAdButton = document.getElementById("skipAd");
+    let timeLeft = 30;
+
+    hdAdOverlay.style.display = "block";
+    adTimer.textContent = timeLeft;
+    skipTimer.textContent = timeLeft;
+
+    const timer = setInterval(() => {
+        timeLeft--;
+        adTimer.textContent = timeLeft;
+        skipTimer.textContent = timeLeft;
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            skipAdButton.disabled = false;
+            skipAdButton.onclick = () => {
+                if (hdVideoUrl) {
+                    const link = document.createElement("a");
+                    link.href = hdVideoUrl;
+                    link.download = "";
+                    link.target = "_blank";
+                    link.click();
+                    hdAdOverlay.style.display = "none";
                 }
-            }).catch(err => console.error("Clipboard access error:", err));
-        } else if (pasteClearBtn.textContent === "Clear") {
-            input.value = "";
-            updateButtonText();
+            };
         }
-    });
-
-    input.addEventListener("input", updateButtonText);
-    updateButtonText();
-});
+    }, 1000);
+}
