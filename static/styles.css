@@ -8,11 +8,6 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: background 0.3s, color 0.3s;
-}
-body.dark-mode {
-    background: linear-gradient(135deg, #1a1a2e, #16213e);
-    color: #ffffff;
 }
 header {
     background-color: #ffffff;
@@ -22,10 +17,13 @@ header {
     top: 0;
     width: 100%;
     z-index: 1000;
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-header.dark-mode {
-    background-color: #1a1a2e;
+.logo {
+    width: 40px;
+    height: 40px;
 }
 .site-title {
     color: #007bff;
@@ -36,8 +34,17 @@ header.dark-mode {
     letter-spacing: 2px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
-.site-title.dark-mode {
-    color: #00c4ff;
+.get-app {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+.get-app:hover {
+    background-color: #218838;
 }
 .container {
     display: flex;
@@ -57,9 +64,6 @@ header.dark-mode {
     text-align: center;
     animation: fadeIn 1s ease-in;
 }
-.card.dark-mode {
-    background: #2a2a3a;
-}
 .hero {
     margin-top: 80px;
 }
@@ -69,10 +73,6 @@ header.dark-mode {
     background: #f9f9f9;
     border-radius: 10px;
     font-size: 14px;
-}
-.how-to-download.dark-mode {
-    background: #33334d;
-    color: #cccccc;
 }
 .how-to-download ol {
     padding-left: 20px;
@@ -84,7 +84,7 @@ header.dark-mode {
     justify-content: center;
     align-items: center;
     margin-top: 20px;
-    max-width: 600px; /* ফুল উইথ সীমিত */
+    max-width: 600px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -123,7 +123,7 @@ button {
     font-size: 16px;
     cursor: pointer;
     transition: transform 0.2s, background-color 0.3s;
-    flex: 1; /* Input-এর সাথে সামঞ্জস্য */
+    flex: 1;
 }
 button:hover {
     background-color: #0056b3;
@@ -159,9 +159,6 @@ button:hover {
     border-radius: 10px;
     transition: transform 0.3s;
 }
-.feature-card.dark-mode {
-    background: #33334d;
-}
 .feature-card:hover {
     transform: translateY(-5px);
 }
@@ -173,30 +170,18 @@ button:hover {
     font-size: 40px;
     color: #007bff;
 }
-.feature-card.dark-mode i {
-    color: #00c4ff;
-}
 .feature-card h3 {
     color: #007bff;
     font-size: 18px;
-}
-.feature-card.dark-mode h3 {
-    color: #00c4ff;
 }
 .feature-card p {
     color: #555;
     font-size: 14px;
 }
-.feature-card.dark-mode p {
-    color: #cccccc;
-}
 #result {
     margin-top: 20px;
     color: #333;
     font-size: 14px;
-}
-#result.dark-mode {
-    color: #ffffff;
 }
 #result img {
     max-width: 100%;
@@ -235,10 +220,6 @@ footer {
     box-sizing: border-box;
     margin-top: auto;
 }
-footer.dark-mode {
-    background-color: #1a1a2e;
-    color: #cccccc;
-}
 .footer-boxes {
     display: flex;
     justify-content: center;
@@ -262,15 +243,6 @@ footer nav a {
     margin: 0 10px;
     color: #007bff;
 }
-footer.dark-mode nav a {
-    color: #00c4ff;
-}
-.theme-toggle {
-    margin-top: 10px;
-}
-.theme-toggle input {
-    margin-right: 5px;
-}
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -292,5 +264,15 @@ footer.dark-mode nav a {
     .footer-boxes {
         flex-direction: column;
         gap: 10px;
+    }
+    header {
+        flex-direction: column;
+        text-align: center;
+    }
+    .logo {
+        margin-bottom: 10px;
+    }
+    .get-app {
+        margin-top: 10px;
     }
 }
