@@ -1,7 +1,6 @@
 let hdVideoUrl = null;
 let mp4VideoUrl = null;
 let mp3AudioUrl = null;
-let adCompleted = false;
 
 async function downloadVideo() {
     const url = document.getElementById("tiktokLink").value.trim();
@@ -40,7 +39,7 @@ async function downloadVideo() {
                 <p>Choose your download format:</p>
                 <a href="#" class="download-btn" onclick="downloadMp4()"><i class="fas fa-video"></i> Download MP4 (SD)</a>
                 <a href="#" class="download-btn" onclick="downloadMp3()"><i class="fas fa-music"></i> Download MP3</a>
-                <a href="#" class="download-btn ad-icon" onclick="showHdAd()"><i class="fas fa-ad"></i> Download HD</a>
+                <a href="#" class="download-btn" onclick="downloadHd()"><i class="fas fa-hd"></i> Download HD</a>
             `;
         } else {
             resultDiv.innerHTML = `<p style='color: red;'>Error: ${data.error}</p>`;
@@ -71,45 +70,14 @@ function downloadMp3() {
     }
 }
 
-function showHdAd() {
-    const hdAdPopup = document.getElementById("hdAdPopup");
-    const closeAd = document.getElementById("closeAd");
-    const ad = document.getElementById("hdAd");
-
-    hdAdPopup.style.display = "block";
-    adCompleted = false;
-
-    // Simulate ad completion (adjust based on AdSense API)
-    const checkAdStatus = setInterval(() => {
-        const adIframe = document.querySelector("#hdAdPopup ins iframe");
-        if (adIframe && !adIframe.style.display && adCompleted) {
-            clearInterval(checkAdStatus);
-            closeAd.style.display = "block"; // Already visible, no change needed
-        }
-    }, 1000);
-
-    // AdSense event listener (placeholder; replace with actual AdSense event)
-    window.addEventListener("adsbygoogle", function(e) {
-        if (e.detail && e.detail.type === "adCompleted") {
-            adCompleted = true;
-        }
-    });
-
-    closeAd.onclick = () => {
-        if (adCompleted) {
-            if (hdVideoUrl) {
-                const link = document.createElement("a");
-                link.href = hdVideoUrl;
-                link.download = "";
-                link.target = "_blank";
-                link.click();
-                hdAdPopup.style.display = "none";
-            }
-        } else {
-            alert("Please watch the ad fully to download!");
-            // Do not close the popup if ad is not completed
-        }
-    };
+function downloadHd() {
+    if (hdVideoUrl) {
+        const link = document.createElement("a");
+        link.href = hdVideoUrl;
+        link.download = "";
+        link.target = "_blank";
+        link.click();
+    }
 }
 
 function shareLink() {
@@ -130,7 +98,5 @@ function toggleDarkMode() {
     document.querySelector(".container").classList.toggle("dark-mode");
     document.querySelector(".hero").classList.toggle("dark-mode");
     document.querySelector(".features").classList.toggle("dark-mode");
-    document.querySelector(".popup-content").classList.toggle("dark-mode");
-    document.querySelector(".ad-content").classList.toggle("dark-mode");
     document.querySelector("footer").classList.toggle("dark-mode");
 }
