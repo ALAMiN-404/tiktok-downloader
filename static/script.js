@@ -1,6 +1,7 @@
 let hdVideoUrl = null;
 let mp4VideoUrl = null;
 let mp3AudioUrl = null;
+let adCompleted = false;
 
 async function downloadVideo() {
     const url = document.getElementById("tiktokLink").value.trim();
@@ -37,9 +38,9 @@ async function downloadVideo() {
                 <p><strong>Description:</strong> ${info.description}</p>
                 ${data.thumbnail ? `<img src="${data.thumbnail}" alt="Video Preview">` : ""}
                 <p>Choose your download format:</p>
-                <a href="#" onclick="downloadMp4()">Download MP4 (SD)</a>
-                <a href="#" onclick="downloadMp3()">Download MP3</a>
-                <a href="#" onclick="showHdAd()">Download HD</a>
+                <a href="#" class="download-btn" onclick="downloadMp4()"><i class="fas fa-video"></i> Download MP4 (SD)</a>
+                <a href="#" class="download-btn" onclick="downloadMp3()"><i class="fas fa-music"></i> Download MP3</a>
+                <a href="#" class="download-btn ad-icon" onclick="showHdAd()"><i class="fas fa-ad"></i> Download HD</a>
             `;
         } else {
             resultDiv.innerHTML = `<p style='color: red;'>Error: ${data.error}</p>`;
@@ -71,33 +72,64 @@ function downloadMp3() {
 }
 
 function showHdAd() {
-    const hdAdOverlay = document.getElementById("hdAdOverlay");
+    const hdAdPopup = document.getElementById("hdAdPopup");
     const closeAd = document.getElementById("closeAd");
+    const ad = document.getElementById("hdAd");
 
-    hdAdOverlay.style.display = "block";
-    closeAd.style.display = "none"; // Initially hidden
+    hdAdPopup.style.display = "block";
+    closeAd.style.display = "none";
+    adCompleted = false;
 
-    const ad = document.querySelector("#hdAdOverlay ins.adsbygoogle");
-    if (ad) {
-        const checkAdStatus = setInterval(() => {
-            // Placeholder: Replace with actual AdSense ad completion event if available
-            // This is a workaround; adjust based on AdSense documentation
-            const adIframe = document.querySelector("#hdAdOverlay ins iframe");
-            if (adIframe && !adIframe.style.display && !closeAd.style.display) {
-                clearInterval(checkAdStatus);
-                closeAd.style.display = "block";
-            }
-        }, 1000);
+    // Simulate ad completion (adjust based on AdSense API)
+    const checkAdStatus = setInterval(() => {
+        const adIframe = document.querySelector("#hdAdPopup ins iframe");
+        if (adIframe && !adIframe.style.display && adCompleted) {
+            clearInterval(checkAdStatus);
+            closeAd.style.display = "block";
+        }
+    }, 1000);
 
-        closeAd.onclick = () => {
+    // AdSense event listener (placeholder; replace with actual AdSense event)
+    window.addEventListener("adsbygoogle", function(e) {
+        if (e.detail && e.detail.type === "adCompleted") {
+            adCompleted = true;
+        }
+    });
+
+    closeAd.onclick = () => {
+        if (adCompleted) {
             if (hdVideoUrl) {
                 const link = document.createElement("a");
                 link.href = hdVideoUrl;
                 link.download = "";
                 link.target = "_blank";
                 link.click();
-                hdAdOverlay.style.display = "none";
+                hdAdPopup.style.display = "none";
             }
-        };
+        } else {
+            alert("Please watch the ad fully to download!");
+        }
+    };
+}
+
+function shareLink() {
+    if (navigator.share) {
+        navigator.share({
+            title: "SnipTok",
+            text: "Download TikTok videos easily with SnipTok!",
+            url: window.location.href
+        }).catch(console.error);
+    } else {
+        alert("Sharing not supported on this device.");
     }
+}
+
+function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+    document.querySelector("header").classList.toggle("dark-mode");
+    document.querySelector(".container").classList.toggle("dark-mode");
+    document.querySelector(".features").classList.toggle("dark-mode");
+    document.querySelector(".popup-content").classList.toggle("dark-mode");
+    document.querySelector(".ad-content").classList.toggle("dark-mode");
+    document.querySelector("footer").classList.toggle("dark-mode");
 }
