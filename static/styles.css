@@ -186,88 +186,14 @@ button:hover {
 #result .download-btn i {
     font-size: 16px;
 }
-#result .download-btn.ad-icon::before {
-    content: url('/static/icons/ad-icon.svg');
-    width: 16px;
-    height: 16px;
-}
-.popup-ad {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.popup-content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-    position: relative;
-    animation: slideIn 0.5s ease;
-}
-.popup-content.dark-mode {
-    background: #2a2a3a;
-}
-.close-popup {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 20px;
-    cursor: pointer;
-}
-.ad-popup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    z-index: 1000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.ad-content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
-    position: relative;
-}
-.ad-content.dark-mode {
-    background: #2a2a3a;
-}
-.close-ad {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 20px;
-    cursor: pointer;
-    color: #007bff;
-}
-ins.adsbygoogle {
-    margin: 20px auto;
-    display: block;
-}
 footer {
     background-color: #ffffff;
     padding: 15px;
     text-align: center;
     color: #555;
     font-size: 12px;
-    margin-top: auto;
+    width: 100%; /* ফুল উইথ সেট করা হয়েছে */
+    box-sizing: border-box;
 }
 footer.dark-mode {
     background-color: #1a1a2e;
