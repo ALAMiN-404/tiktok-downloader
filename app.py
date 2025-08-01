@@ -1,51 +1,74 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import requests
-from bs4 import BeautifulSoup
 
 app = Flask(__name__)
+CORS(app)
+
+@app.route("/")
+def index():
+    return app.send_static_file("index.html")
+
+@app.route("/static/<path:path>")
+def serve_static(path):
+    return app.send_static_file(path)
 
 @app.route("/download", methods=["POST"])
 def download():
     data = request.get_json()
-    url = data.get("url")
-    if not url:
-        return jsonify({"success": False, "error": "No URL provided"}), 400
+    tiktok_url = data.get("url")
 
+    if not tiktok_url:
+        return jsonify({"success": False, "error": "No URL provided!"})
+
+    # Try TikWM API
     try:
-        # Using SnapTik API endpoint
-        snap_tik_url = "https://snaptik.app/abc.php"
+        api_url = "https://tikwm.com/api/"
+        payload = {"url": tiktok_url, "hd": 1}
         headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-            "Content-Type": "application/x-www-form-urlencoded"
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "User-Agent": "Mozilla/5.0"
         }
-        payload = {"url": url}
+        response = requests.post(api_url, json=payload, headers=headers, timeout=10)
+        response.raise_for_status()
+        result = response.json()
 
-        response = requests.post(snap_tik_url, data=payload, headers=headers, allow_redirects=True)
+        if result.get("code") == 0:
+            video_url = result["data"].get("play")
+            hd_video_url = result["data"].get("hdplay")
+            audio_url = result["data"].get("music")
+            if not video_url:
+                raise ValueError("Video link not found")
+            return jsonify({
+                "success": True,
+                "video_url": video_url,
+                "hd_video_url": hd_video_url,
+                "audio_url": audio_url
+            })
+    except Exception as e:
+        print(f"TikWM Error: {str(e)}")
+        # Fallback to ssstik.io API
+        try:
+            api_url = "https://ssstik.io/abc?url=dl"
+            payload = {"id": tiktok_url}
+            headers = {"User-Agent": "Mozilla/5.0"}
+            response = requests.post(api_url, data=payload, headers=headers, timeout=10)
+            response.raise_for_status()
+            result = response.json()
 
-        if response.status_code == 200:
-            soup = BeautifulSoup(response.text, "html.parser")
-            download_link = soup.find("a", {"class": "download-link"})["href"] if soup.find("a", {"class": "download-link"}) else None
-            thumbnail = soup.find("img", {"class": "thumbnail"})["src"] if soup.find("img", {"class": "thumbnail"}) else None
-            title = soup.find("h1", {"class": "video-title"}).text if soup.find("h1", {"class": "video-title"}) else "N/A"
-
-            if download_link:
+            if result.get("success"):
+                video_url = result.get("result", {}).get("nowatermark")
+                audio_url = result.get("result", {}).get("music")
                 return jsonify({
                     "success": True,
-                    "hd_video_url": download_link if "hd" in download_link.lower() else None,
-                    "video_url": download_link,
-                    "audio_url": None,  # SnapTik doesn't provide direct audio link, can be extracted separately if needed
-                    "thumbnail": thumbnail,
-                    "info": {
-                        "title": title,
-                        "description": "N/A"
-                    }
+                    "video_url": video_url,
+                    "audio_url": audio_url
                 })
             else:
-                return jsonify({"success": False, "error": "No download link found"}), 400
-        else:
-            return jsonify({"success": False, "error": f"API Error: {response.status_code}"}), 500
-    except Exception as e:
-        return jsonify({"success": False, "error": str(e)}), 500
+                return jsonify({"success": False, "error": "ssstik.io download failed"})
+        except Exception as e2:
+            return jsonify({"success": False, "error": f"TikWM and ssstik.io failed: {str(e2)}"})
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    app.run(debug=True)
