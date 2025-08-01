@@ -27,19 +27,19 @@ async function downloadVideo() {
         const data = await response.json();
 
         if (data.success) {
-            hdVideoUrl = data.hd_video_url;
-            mp4VideoUrl = data.video_url;
-            mp3AudioUrl = data.audio_url;
-            const info = data.info || { id: "N/A", title: "N/A", description: "N/A" };
+            hdVideoUrl = data.hd_video_url || null;
+            mp4VideoUrl = data.video_url || null;
+            mp3AudioUrl = data.audio_url || null;
+            const info = data.info || { title: "N/A", description: "N/A" };
             resultDiv.innerHTML = `
-                <p><strong>TikTok ID:</strong> ${info.id}</p>
-                <p><strong>Title:</strong> ${info.title}</p>
-                <p><strong>Description:</strong> ${info.description}</p>
+                <p><strong>TikTok Name:</strong> ${info.title || "N/A"}</p>
+                <p><strong>Description:</strong> ${info.description || "N/A"}</p>
                 ${data.thumbnail ? `<img src="${data.thumbnail}" alt="Video Preview">` : ""}
                 <p>Choose your download format:</p>
-                <a href="#" class="download-btn" onclick="downloadMp4()"><i class="fas fa-video"></i> Download MP4 (SD)</a>
-                <a href="#" class="download-btn" onclick="downloadMp3()"><i class="fas fa-music"></i> Download MP3</a>
-                <a href="#" class="download-btn" onclick="downloadHd()"><i class="fas fa-hd"></i> Download HD</a>
+                ${mp4VideoUrl ? `<a href="${mp4VideoUrl}" class="download-btn" download><i class="fas fa-video"></i> Download MP4 (SD)</a>` : ""}
+                ${mp3AudioUrl ? `<a href="${mp3AudioUrl}" class="download-btn" download><i class="fas fa-music"></i> Download MP3</a>` : ""}
+                ${hdVideoUrl ? `<a href="${hdVideoUrl}" class="download-btn" download><i class="fas fa-hd"></i> Download HD</a>` : ""}
+                ${!mp4VideoUrl && !mp3AudioUrl && !hdVideoUrl ? "<p style='color: red;'>No downloadable content available.</p>" : ""}
             `;
         } else {
             resultDiv.innerHTML = `<p style='color: red;'>Error: ${data.error}</p>`;
@@ -47,36 +47,6 @@ async function downloadVideo() {
     } catch (error) {
         console.error("Fetch Error:", error);
         resultDiv.innerHTML = `<p style='color: red;'>Error: ${error.message}. Check console for details.</p>`;
-    }
-}
-
-function downloadMp4() {
-    if (mp4VideoUrl) {
-        const link = document.createElement("a");
-        link.href = mp4VideoUrl;
-        link.download = "";
-        link.target = "_blank";
-        link.click();
-    }
-}
-
-function downloadMp3() {
-    if (mp3AudioUrl) {
-        const link = document.createElement("a");
-        link.href = mp3AudioUrl;
-        link.download = "";
-        link.target = "_blank";
-        link.click();
-    }
-}
-
-function downloadHd() {
-    if (hdVideoUrl) {
-        const link = document.createElement("a");
-        link.href = hdVideoUrl;
-        link.download = "";
-        link.target = "_blank";
-        link.click();
     }
 }
 
@@ -90,15 +60,6 @@ function shareLink() {
     } else {
         alert("Sharing not supported on this device.");
     }
-}
-
-function toggleDarkMode() {
-    document.body.classList.toggle("dark-mode");
-    document.querySelector("header").classList.toggle("dark-mode");
-    document.querySelector(".container").classList.toggle("dark-mode");
-    document.querySelector(".hero").classList.toggle("dark-mode");
-    document.querySelector(".features").classList.toggle("dark-mode");
-    document.querySelector("footer").classList.toggle("dark-mode");
 }
 
 // Paste/Clear Button Functionality
