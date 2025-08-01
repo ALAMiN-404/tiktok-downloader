@@ -1,11 +1,13 @@
 body {
     font-family: 'Poppins', Arial, sans-serif;
-    background: linear-gradient(135deg, #00c4ff, #007bff);
+    background: linear-gradient(135deg, #e0eafc, #cfdef3);
     margin: 0;
     padding: 0;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     transition: background 0.3s, color 0.3s;
 }
 body.dark-mode {
@@ -38,10 +40,28 @@ header.dark-mode {
     color: #00c4ff;
 }
 .container {
-    max-width: 90%;
-    width: 700px;
-    margin: 100px auto 20px;
-    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    max-width: 800px;
+    margin: 100px auto;
+    gap: 20px;
+}
+.card {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    text-align: center;
+    animation: fadeIn 1s ease-in;
+}
+.card.dark-mode {
+    background: #2a2a3a;
+}
+.hero {
+    margin-top: 80px;
 }
 .search-bar {
     display: flex;
@@ -93,21 +113,13 @@ button:hover {
     background-color: #218838;
 }
 .features {
-    text-align: center;
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    margin-top: 20px;
-    animation: fadeIn 1s ease-in;
-}
-.features.dark-mode {
-    background-color: #2a2a3a;
+    margin-bottom: 20px;
 }
 .feature-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
+    justify-content: center;
 }
 .feature-card {
     padding: 15px;
@@ -188,6 +200,9 @@ button:hover {
     height: 100%;
     background: rgba(0, 0, 0, 0.5);
     z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .popup-content {
     background: #fff;
@@ -195,7 +210,6 @@ button:hover {
     border-radius: 10px;
     width: 90%;
     max-width: 400px;
-    margin: 100px auto;
     text-align: center;
     position: relative;
     animation: slideIn 0.5s ease;
@@ -219,6 +233,9 @@ button:hover {
     height: 100%;
     background: rgba(0, 0, 0, 0.8);
     z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .ad-content {
     background: #fff;
@@ -226,7 +243,6 @@ button:hover {
     border-radius: 10px;
     width: 90%;
     max-width: 400px;
-    margin: 100px auto;
     text-align: center;
     position: relative;
 }
@@ -289,4 +305,7 @@ footer.dark-mode nav a {
     .site-title {
         font-size: 28px;
     }
+    .card {
+        padding: 15px;
     }
+}
