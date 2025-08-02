@@ -6,9 +6,16 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    overflow-x: hidden; /* ড্রয়ার বের হওয়া প্রতিরোধ */
-    position: relative; /* ড্রয়ারের জন্য সাপোর্ট */
+    overflow-x: hidden;
+    position: relative;
+    transition: background 0.3s, color 0.3s; /* থিম পরিবর্তনের জন্য ট্রানজিশন */
 }
+
+body.dark-mode {
+    background: linear-gradient(135deg, #1a1a1a, #333);
+    color: #fff;
+}
+
 header {
     background-color: #ffffff;
     padding: 15px;
@@ -18,19 +25,31 @@ header {
     width: 100%;
     z-index: 1000;
 }
+
+header.dark-mode {
+    background-color: #222;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
 .header-content {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* এটি অপরিবর্তিত থাকবে, কিন্তু ভিতরে স্পেসিং বাড়ানো হবে */
+    justify-content: space-between;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 30px; /* প্যাডিং বাড়িয়ে ডান সাইডে স্পেস তৈরি করা */
+    padding: 0 30px;
 }
+
 .menu-icon {
     font-size: 24px;
     cursor: pointer;
     color: #007bff;
 }
+
+.menu-icon.dark-mode {
+    color: #00c4ff;
+}
+
 .site-title {
     color: #007bff;
     font-size: 24px;
@@ -38,64 +57,103 @@ header {
     font-weight: 600;
     text-decoration: none;
 }
+
+.site-title.dark-mode {
+    color: #00c4ff;
+}
+
 .get-app {
     background-color: #007bff;
     padding: 8px 15px;
     border-radius: 8px;
-    margin-right: 20px; /* ডান দিক থেকে একটু ভিতরে সরানো */
-    max-width: 100px; /* সর্বোচ্চ প্রস্থ সেট করা, প্রয়োজন হলে সমন্বয় করুন */
+    margin-right: 10px;
+    max-width: 100px;
 }
+
 .get-app a {
     color: white;
     text-decoration: none;
     font-size: 16px;
     font-weight: 600;
-    white-space: nowrap; /* লেখাটি এক লাইনে রাখবে */
-    overflow: hidden; /* কাটা প্রতিরোধ */
-    text-overflow: ellipsis; /* কাটলে ... দেখাবে */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
+
 .get-app:hover {
     background-color: #0056b3;
 }
+
+.get-app.dark-mode {
+    background-color: #00c4ff;
+}
+
+.get-app.dark-mode:hover {
+    background-color: #0099cc;
+}
+
 .side-drawer {
     position: fixed;
     top: 0;
-    right: -260px; /* ডান দিকে লুকানোর জন্য right ব্যবহার */
+    right: -260px;
     width: 250px;
     height: 100%;
     background-color: #ffffff;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2); /* ডান দিকের ছায়া */
-    transition: right 0.3s ease; /* right এর ট্রানজিশন */
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+    transition: right 0.3s ease;
     z-index: 2000;
     display: flex;
     flex-direction: column;
     padding: 20px;
-    box-sizing: border-box; /* প্যাডিং এর কারণে প্রস্থ বাড়ার প্রতিরোধ */
+    box-sizing: border-box;
 }
+
+.side-drawer.dark-mode {
+    background-color: #333;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+}
+
 .side-drawer.open {
-    right: 0; /* ডান দিকে ওপেন */
+    right: 0;
 }
+
 .close-icon {
     font-size: 20px;
     cursor: pointer;
     align-self: flex-end;
     margin-bottom: 20px;
 }
+
+.close-icon.dark-mode {
+    color: #fff;
+}
+
 .side-drawer a {
     color: #007bff;
     text-decoration: none;
     font-size: 18px;
     margin: 15px 0;
 }
+
+.side-drawer a.dark-mode {
+    color: #00c4ff;
+}
+
 .side-drawer a:hover {
     color: #0056b3;
 }
+
+.side-drawer a.dark-mode:hover {
+    color: #0099cc;
+}
+
 .container {
     max-width: 90%;
     width: 700px;
     margin: 80px auto 20px;
     flex-grow: 1;
 }
+
 .hero {
     text-align: center;
     background-color: #ffffff;
@@ -104,12 +162,19 @@ header {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     animation: fadeIn 1s ease-in;
 }
+
+.hero.dark-mode {
+    background-color: #444;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
 .input-group {
     display: flex;
     gap: 10px;
     justify-content: center;
     align-items: center;
 }
+
 input {
     padding: 12px;
     width: 100%;
@@ -119,10 +184,18 @@ input {
     font-size: 16px;
     outline: none;
 }
+
 input:focus {
     border-color: #00c4ff;
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
 }
+
+input.dark-mode {
+    background-color: #555;
+    border-color: #00c4ff;
+    color: #fff;
+}
+
 button {
     padding: 12px 30px;
     background-color: #007bff;
@@ -133,10 +206,20 @@ button {
     cursor: pointer;
     transition: transform 0.2s, background-color 0.3s;
 }
+
 button:hover {
     background-color: #0056b3;
     transform: scale(1.05);
 }
+
+button.dark-mode {
+    background-color: #00c4ff;
+}
+
+button.dark-mode:hover {
+    background-color: #0099cc;
+}
+
 .features {
     text-align: center;
     background-color: #ffffff;
@@ -146,45 +229,76 @@ button:hover {
     margin-top: 20px;
     animation: fadeIn 1.5s ease-in;
 }
+
+.features.dark-mode {
+    background-color: #444;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
 .feature-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
 }
+
 .feature-card {
     padding: 15px;
     background: #f9f9f9;
     border-radius: 10px;
     transition: transform 0.3s;
 }
+
+.feature-card.dark-mode {
+    background: #555;
+}
+
 .feature-card:hover {
     transform: translateY(-5px);
 }
+
 .feature-card img {
     width: 50px;
     height: 50px;
 }
+
 .feature-card h3 {
     color: #007bff;
     font-size: 18px;
 }
+
+.feature-card h3.dark-mode {
+    color: #00c4ff;
+}
+
 .feature-card p {
     color: #555;
     font-size: 14px;
 }
+
+.feature-card p.dark-mode {
+    color: #ccc;
+}
+
 #result {
     margin-top: 20px;
     color: #333;
     font-size: 14px;
 }
+
+#result.dark-mode {
+    color: #fff;
+}
+
 #result img {
     max-width: 100%;
     border-radius: 8px;
     margin-top: 10px;
 }
+
 #result p {
     margin: 5px 0;
 }
+
 #result a {
     color: #007bff;
     text-decoration: none;
@@ -196,10 +310,22 @@ button:hover {
     border-radius: 5px;
     transition: background-color 0.3s;
 }
+
+#result a.dark-mode {
+    color: #00c4ff;
+    border-color: #00c4ff;
+}
+
 #result a:hover {
     background-color: #007bff;
     color: white;
 }
+
+#result a.dark-mode:hover {
+    background-color: #00c4ff;
+    color: #fff;
+}
+
 footer {
     background-color: #ffffff;
     padding: 15px;
@@ -208,14 +334,26 @@ footer {
     font-size: 12px;
     margin-top: auto;
 }
+
+footer.dark-mode {
+    background-color: #222;
+    color: #ccc;
+}
+
 footer nav a {
     margin: 0 10px;
     color: #007bff;
 }
+
+footer nav a.dark-mode {
+    color: #00c4ff;
+}
+
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
 }
+
 @media (max-width: 600px) {
     .container {
         width: 95%;
@@ -227,7 +365,7 @@ footer nav a {
         grid-template-columns: 1fr;
     }
     .header-content {
-        padding: 0 15px; /* ছোট স্ক্রিনে প্যাডিং কমানো */
+        padding: 0 15px;
     }
     .site-title {
         font-size: 20px;
@@ -236,7 +374,7 @@ footer nav a {
         font-size: 14px;
     }
     .get-app {
-        margin-right: 5px; /* ছোট স্ক্রিনে মার্জিন কমানো */
-        padding: 6px 12px; /* ছোট স্ক্রিনে প্যাডিং কমানো */
+        margin-right: 5px;
+        padding: 6px 12px;
     }
 }
