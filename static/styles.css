@@ -7,6 +7,7 @@ body {
     display: flex;
     flex-direction: column;
     overflow-x: hidden; /* ড্রয়ার বের হওয়া প্রতিরোধ */
+    position: relative; /* ড্রয়ারের জন্য সাপোর্ট */
 }
 header {
     background-color: #ffffff;
@@ -54,7 +55,7 @@ header {
 .side-drawer {
     position: fixed;
     top: 0;
-    left: -300px; /* ড্রয়ারের প্রস্থের চেয়ে ১০px বেশি নেগেটিভ */
+    left: -260px; /* ড্রয়ারের প্রস্থের চেয়ে ১০px বেশি নেগেটিভ */
     width: 250px;
     height: 100%;
     background-color: #ffffff;
@@ -64,6 +65,7 @@ header {
     display: flex;
     flex-direction: column;
     padding: 20px;
+    box-sizing: border-box; /* প্যাডিং এর কারণে প্রস্থ বাড়ার প্রতিরোধ */
 }
 .side-drawer.open {
     left: 0;
