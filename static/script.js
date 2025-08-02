@@ -2,7 +2,7 @@ let hdVideoUrl = null;
 let mp4VideoUrl = null;
 let mp3AudioUrl = null;
 
-// ট্রান্সলেশন ডাটা (সরল উদাহরণ, এটি JSON/API থেকে আসবে)
+// ট্রান্সলেশন ডাটা (সরল উদাহরণ)
 const translations = {
     en: {
         title: "Download TikTok Videos Instantly",
@@ -36,9 +36,38 @@ const translations = {
         contact: "যোগাযোগ",
         copyright: "&copy; ২০২৫ SnipTok। সব অধিকার সংরক্ষিত।"
     },
-    // আরও ভাষা যোগ করতে পারেন
-    hi: { title: "तुरंत टिकटॉक वीडियो डाउनलोड करें", desc: "अपना टिकटॉक वीडियो URL पेस्ट करें और वॉटरमार्क के बिना HD, MP4 या MP3 प्रारूप में डाउनलोड करें!", hd: "HD वीडियो डाउनलोड", audio: "ऑडियो निष्कर्षण", watermark: "वॉटरमार्क-मुक्त", name: "नाम", description: "विवरण", download: "डाउनलोड", getApp: "ऐप प्राप्त करें", why: "क्यों SnipTok?", about: "के बारे में", terms: "शर्तें", contact: "संपर्क", copyright: "&copy; 2025 SnipTok। सर्वाधिकार सुरक्षित।" },
-    ar: { title: "قم بتنزيل فيديوهات تيك توك فورًا", desc: "انسخ رابط فيديو تيك توك الخاص بك ونزّله بجودة HD أو MP4 أو MP3 بدون علامات مائية!", hd: "تنزيل فيديو HD", audio: "استخراج الصوت", watermark: "خالي من العلامات المائية", name: "الاسم", description: "الوصف", download: "تنزيل", getApp: "احصل على التطبيق", why: "لماذا SnipTok?", about: "حول", terms: "الشروط", contact: "اتصل", copyright: "&copy; 2025 SnipTok. جميع الحقوق محفوظة." }
+    hi: {
+        title: "तुरंत टिकटॉक वीडियो डाउनलोड करें",
+        desc: "अपना टिकटॉक वीडियो URL पेस्ट करें और वॉटरमार्क के बिना HD, MP4 या MP3 प्रारूप में डाउनलोड करें!",
+        hd: "HD वीडियो डाउनलोड",
+        audio: "ऑडियो निष्कर्षण",
+        watermark: "वॉटरमार्क-मुक्त",
+        name: "नाम",
+        description: "विवरण",
+        download: "डाउनलोड",
+        getApp: "ऐप प्राप्त करें",
+        why: "क्यों SnipTok?",
+        about: "के बारे में",
+        terms: "शर्तें",
+        contact: "संपर्क",
+        copyright: "&copy; 2025 SnipTok। सर्वाधिकार सुरक्षित।"
+    },
+    ar: {
+        title: "قم بتنزيل فيديوهات تيك توك فورًا",
+        desc: "انسخ رابط فيديو تيك توك الخاص بك ونزّله بجودة HD أو MP4 أو MP3 بدون علامات مائية!",
+        hd: "تنزيل فيديو HD",
+        audio: "استخراج الصوت",
+        watermark: "خالي من العلامات المائية",
+        name: "الاسم",
+        description: "الوصف",
+        download: "تنزيل",
+        getApp: "احصل على التطبيق",
+        why: "لماذا SnipTok?",
+        about: "حول",
+        terms: "الشروط",
+        contact: "اتصل",
+        copyright: "&copy; 2025 SnipTok. جميع الحقوق محفوظة."
+    }
     // বাকি ভাষাগুলোর জন্য ডাটা যোগ করতে পারেন
 };
 
@@ -47,7 +76,7 @@ async function downloadVideo() {
     const resultDiv = document.getElementById("result");
     
     if (!url) {
-        resultDiv.innerHTML = `<p style='color: red;'>${translations[localStorage.getItem("language") || "en"].pleaseEnter}</p>`;
+        resultDiv.innerHTML = `<p style='color: red;'>${translations[localStorage.getItem("language") || "en"].pleaseEnter || "Please enter a valid TikTok URL!"}</p>`;
         return;
     }
 
@@ -75,7 +104,7 @@ async function downloadVideo() {
                 <p><strong>${translations[localStorage.getItem("language") || "en"].name}:</strong> ${info.name}</p>
                 <p><strong>${translations[localStorage.getItem("language") || "en"].description}:</strong> ${info.description}</p>
                 ${data.thumbnail ? `<img src="${data.thumbnail}" alt="Video Preview">` : ""}
-                <p>${translations[localStorage.getItem("language") || "en"].chooseFormat}:</p>
+                <p>${translations[localStorage.getItem("language") || "en"].chooseFormat || "Choose your download format:"}</p>
                 <a href="#" onclick="downloadMp4()">${translations[localStorage.getItem("language") || "en"].download} MP4 (SD)</a>
                 <a href="#" onclick="downloadMp3()">${translations[localStorage.getItem("language") || "en"].download} MP3</a>
                 <a href="#" onclick="downloadHd()">${translations[localStorage.getItem("language") || "en"].download} HD</a>
