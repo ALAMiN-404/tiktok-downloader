@@ -42,7 +42,7 @@ header {
     background-color: #007bff;
     padding: 8px 15px;
     border-radius: 8px;
-    margin-right: 10px; /* ডান দিক থেকে একটু ভিতরে সরানো */
+    margin-right: 20px; /* ডান দিক থেকে একটু ভিতরে সরানো */
     max-width: 100px; /* সর্বোচ্চ প্রস্থ সেট করা, প্রয়োজন হলে সমন্বয় করুন */
 }
 .get-app a {
