@@ -30,10 +30,9 @@ async function downloadVideo() {
             hdVideoUrl = data.hd_video_url;
             mp4VideoUrl = data.video_url;
             mp3AudioUrl = data.audio_url;
-            const info = data.info || { id: "N/A", title: "N/A", description: "N/A" };
+            const info = data.info || { id: "N/A", name: "N/A", description: "N/A" }; // ID-এর বদলে name
             resultDiv.innerHTML = `
-                <p><strong>TikTok ID:</strong> ${info.id}</p>
-                <p><strong>Title:</strong> ${info.title}</p>
+                <p><strong>Name:</strong> ${info.name}</p>
                 <p><strong>Description:</strong> ${info.description}</p>
                 ${data.thumbnail ? `<img src="${data.thumbnail}" alt="Video Preview">` : ""}
                 <p>Choose your download format:</p>
@@ -95,9 +94,49 @@ document.addEventListener("click", function (event) {
 });
 
 function toggleTheme() {
-    alert("Theme toggle feature coming soon!");
+    document.body.classList.toggle("dark-mode");
+    // এখানে থিম স্টোর করার জন্য localStorage ব্যবহার করা যেতে পারে
+    localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
 }
 
 function toggleLanguage() {
-    alert("Language toggle feature coming soon!");
+    // এখানে ল্যাঙ্গুয়েজ সিলেক্ট লিস্ট খুলবে
+    const languages = {
+        "bn": "Bangla",
+        "hi": "Hindi",
+        "ar": "Arabic",
+        "en": "English",
+        "es": "Spanish",
+        "ru": "Russian",
+        "fr": "French",
+        "de": "German",
+        "it": "Italian",
+        "ja": "Japanese",
+        "ko": "Korean",
+        "pt": "Portuguese",
+        "zh": "Chinese",
+        "tr": "Turkish"
+    };
+    let languageHTML = "<select onchange='changeLanguage(this.value)'>";
+    for (let code in languages) {
+        languageHTML += `<option value="${code}">${languages[code]}</option>`;
+    }
+    languageHTML += "</select>";
+    alert(languageHTML); // সরলতার জন্য alert দিয়েছি, পরে UI-তে ইন্টিগ্রেট করতে হবে
 }
+
+function changeLanguage(langCode) {
+    // এখানে ল্যাঙ্গুয়েজ অনুযায়ী ট্রান্সলেশন লজিক যোগ করবেন
+    alert(`Language changed to ${langCode}. Translation logic to be implemented!`);
+    // সারা পেজ রিফ্রেশ বা ট্রান্সলেট করার জন্য এখানে কাস্টম ফাংশন লাগবে
+    localStorage.setItem("language", langCode);
+    location.reload(); // সরলতার জন্য রিফ্রেশ, পরে ডায়নামিক ট্রান্সলেশন যোগ করবেন
+}
+
+// পেজ লোড হলে থিম ও ল্যাঙ্গুয়েজ সেট করা
+window.onload = function() {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") document.body.classList.add("dark-mode");
+    const savedLang = localStorage.getItem("language") || "en";
+    changeLanguage(savedLang); // ডিফল্ট ল্যাঙ্গুয়েজ সেট করা
+};
