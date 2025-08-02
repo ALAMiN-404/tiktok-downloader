@@ -1,10 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 40" fill="#007bff" width="40" height="40">
-    <g>
-        <!-- "Snip" -->
-        <path d="M10 5 L20 5 L25 15 L20 25 L10 25 L5 15 Z" fill="#007bff"/>
-        <text x="30" y="20" font-family="Poppins" font-size="20" fill="#007bff">Snip</text>
-        <!-- "TikTok" -->
-        <path d="M50 5 L60 5 L65 15 L60 25 L50 25 L45 15 Z" fill="#007bff"/>
-        <text x="70" y="20" font-family="Poppins" font-size="20" fill="#007bff">TikTok</text>
-    </g>
+<svg width="300" height="100" viewBox="0 0 300 100" xmlns="http://www.w3.org/2000/svg" fill="none">
+  <!-- Text: Sniptok -->
+  <text x="10" y="60" font-family="Arial, sans-serif" font-size="40" fill="#000000" font-weight="bold">
+    Sniptok
+  </text>
+
+  <!-- Download Icon -->
+  <g transform="translate(220, 25)">
+    <rect x="0" y="0" width="50" height="50" rx="10" fill="#000000"/>
+    <path d="M25 15v20M25 35l-7-7M25 35l7-7" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
 </svg>
