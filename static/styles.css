@@ -8,7 +8,7 @@ body {
     flex-direction: column;
     overflow-x: hidden;
     position: relative;
-    transition: background 0.3s, color 0.3s; /* থিম পরিবর্তনের জন্য ট্রানজিশন */
+    transition: background 0.3s, color 0.3s;
 }
 
 body.dark-mode {
@@ -125,6 +125,35 @@ header.dark-mode {
 }
 
 .close-icon.dark-mode {
+    color: #fff;
+}
+
+.theme-toggle, .language-select {
+    margin: 15px 0;
+}
+
+.theme-toggle label, .language-select label {
+    color: #007bff;
+    margin-right: 10px;
+}
+
+.theme-toggle label.dark-mode, .language-select label.dark-mode {
+    color: #00c4ff;
+}
+
+#themeSwitch {
+    margin-right: 5px;
+}
+
+#languageSelect {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #007bff;
+}
+
+#languageSelect.dark-mode {
+    background-color: #555;
+    border-color: #00c4ff;
     color: #fff;
 }
 
