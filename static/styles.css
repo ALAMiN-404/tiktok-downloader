@@ -67,6 +67,12 @@ header {
 .side-drawer.open {
     left: 0;
 }
+.close-icon {
+    font-size: 20px;
+    cursor: pointer;
+    align-self: flex-end;
+    margin-bottom: 20px;
+}
 .side-drawer a {
     color: #007bff;
     text-decoration: none;
