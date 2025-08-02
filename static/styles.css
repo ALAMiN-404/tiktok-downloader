@@ -55,12 +55,12 @@ header {
 .side-drawer {
     position: fixed;
     top: 0;
-    left: -260px; /* ড্রয়ারের প্রস্থের চেয়ে ১০px বেশি নেগেটিভ */
+    right: -260px; /* ডান দিকে লুকানোর জন্য right ব্যবহার */
     width: 250px;
     height: 100%;
     background-color: #ffffff;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
-    transition: left 0.3s ease;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2); /* ডান দিকের ছায়া */
+    transition: right 0.3s ease; /* right এর ট্রানজিশন */
     z-index: 2000;
     display: flex;
     flex-direction: column;
@@ -68,7 +68,7 @@ header {
     box-sizing: border-box; /* প্যাডিং এর কারণে প্রস্থ বাড়ার প্রতিরোধ */
 }
 .side-drawer.open {
-    left: 0;
+    right: 0; /* ডান দিকে ওপেন */
 }
 .close-icon {
     font-size: 20px;
