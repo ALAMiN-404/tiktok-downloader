@@ -21,10 +21,10 @@ header {
 .header-content {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between; /* এটি অপরিবর্তিত থাকবে, কিন্তু ভিতরে স্পেসিং যোগ করা হবে */
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 15px;
+    padding: 0 20px; /* প্যাডিং বাড়িয়ে ভিতরে স্পেস তৈরি করা */
 }
 .menu-icon {
     font-size: 24px;
@@ -42,12 +42,14 @@ header {
     background-color: #007bff;
     padding: 8px 15px;
     border-radius: 8px;
+    margin-left: 10px; /* বাম দিক থেকে একটু ভিতরে সরানো */
 }
 .get-app a {
     color: white;
     text-decoration: none;
     font-size: 16px;
     font-weight: 600;
+    white-space: nowrap; /* লেখাটি এক লাইনে রাখবে */
 }
 .get-app:hover {
     background-color: #0056b3;
@@ -183,51 +185,3 @@ button:hover {
 #result a {
     color: #007bff;
     text-decoration: none;
-    font-weight: bold;
-    display: inline-block;
-    margin: 5px 10px;
-    padding: 10px 20px;
-    border: 2px solid #007bff;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-#result a:hover {
-    background-color: #007bff;
-    color: white;
-}
-footer {
-    background-color: #ffffff;
-    padding: 15px;
-    text-align: center;
-    color: #555;
-    font-size: 12px;
-    margin-top: auto;
-}
-footer nav a {
-    margin: 0 10px;
-    color: #007bff;
-}
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-@media (max-width: 600px) {
-    .container {
-        width: 95%;
-    }
-    .input-group {
-        flex-direction: column;
-    }
-    .feature-grid {
-        grid-template-columns: 1fr;
-    }
-    .header-content {
-        padding: 0 10px;
-    }
-    .site-title {
-        font-size: 20px;
-    }
-    .get-app a {
-        font-size: 14px;
-    }
-}
