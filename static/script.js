@@ -79,3 +79,18 @@ function downloadHd() {
         link.click();
     }
 }
+
+function toggleDrawer() {
+    const drawer = document.getElementById("sideDrawer");
+    drawer.classList.toggle("open");
+}
+
+function toggleTheme() {
+    // ডামি ফাংশন: ভবিষ্যতে থিম পরিবর্তনের লজিক যোগ করতে পারো
+    alert("Theme toggle feature coming soon!");
+}
+
+function toggleLanguage() {
+    // ডামি ফাংশন: ভবিষ্যতে ভাষা পরিবর্তনের লজিক যোগ করতে পারো
+    alert("Language toggle feature coming soon!");
+}
