@@ -85,7 +85,7 @@ function toggleDrawer() {
     drawer.classList.toggle("open");
 }
 
-// বন্ধ করার জন্য ড্রয়ারের বাইরে ক্লিক করলে
+// ড্রয়ারের বাইরে ক্লিক করলে বন্ধ
 document.addEventListener("click", function (event) {
     const drawer = document.getElementById("sideDrawer");
     const menuIcon = document.querySelector(".menu-icon");
