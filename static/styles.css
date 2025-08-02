@@ -18,7 +18,7 @@ body.dark-mode {
 
 header {
     background-color: #ffffff;
-    padding: 15px;
+    padding: 10px 0; /* উপর-নিচের প্যাডিং কমানো */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
@@ -34,16 +34,17 @@ header.dark-mode {
 .header-content {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between; /* বরাবর স্পেসিং */
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 30px;
+    padding: 0 20px; /* বাম-ডান প্যাডিং 20px-এ সীমাবদ্ধ */
 }
 
 .menu-icon {
     font-size: 24px;
     cursor: pointer;
     color: #007bff;
+    margin-left: 10px; /* বামে একটু স্পেস */
 }
 
 .menu-icon.dark-mode {
@@ -56,6 +57,8 @@ header.dark-mode {
     margin: 0;
     font-weight: 600;
     text-decoration: none;
+    flex-grow: 1; /* মাঝখানে স্পেস নেবে */
+    text-align: center; /* শিরোনাম কেন্দ্রীভূত */
 }
 
 .site-title.dark-mode {
@@ -64,16 +67,16 @@ header.dark-mode {
 
 .get-app {
     background-color: #007bff;
-    padding: 8px 15px;
+    padding: 8px 12px; /* প্যাডিং কমানো */
     border-radius: 8px;
-    margin-right: 0px;
-    max-width: 100px;
+    margin-right: 10px; /* ডানে সামান্য স্পেস */
+    max-width: 90px; /* প্রস্থ সীমাবদ্ধ */
 }
 
 .get-app a {
     color: white;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 14px; /* ফন্ট সাইজ কমানো */
     font-weight: 600;
     white-space: nowrap;
     overflow: hidden;
@@ -394,16 +397,17 @@ footer nav a.dark-mode {
         grid-template-columns: 1fr;
     }
     .header-content {
-        padding: 0 15px;
+        padding: 0 15px; /* ছোট স্ক্রিনে প্যাডিং কমানো */
     }
     .site-title {
         font-size: 20px;
     }
     .get-app a {
-        font-size: 14px;
+        font-size: 12px; /* ছোট স্ক্রিনে ফন্ট সাইজ কমানো */
     }
     .get-app {
         margin-right: 5px;
-        padding: 6px 12px;
+        padding: 6px 10px; /* ছোট স্ক্রিনে প্যাডিং কমানো */
+        max-width: 80px;
     }
 }
