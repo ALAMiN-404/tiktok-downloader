@@ -39,7 +39,7 @@ async function downloadVideo() {
                 <p>Choose your download format:</p>
                 <a href="#" onclick="downloadMp4()">Download MP4 (SD)</a>
                 <a href="#" onclick="downloadMp3()">Download MP3</a>
-                <a href="#" onclick="showHdAd()">Download HD</a>
+                <a href="#" onclick="downloadHd()">Download HD</a>
             `;
         } else {
             resultDiv.innerHTML = `<p style='color: red;'>Error: ${data.error}</p>`;
@@ -70,34 +70,12 @@ function downloadMp3() {
     }
 }
 
-function showHdAd() {
-    const hdAdOverlay = document.getElementById("hdAdOverlay");
-    const adTimer = document.getElementById("adTimer");
-    const skipTimer = document.getElementById("skipTimer");
-    const skipAdButton = document.getElementById("skipAd");
-    let timeLeft = 30;
-
-    hdAdOverlay.style.display = "block";
-    adTimer.textContent = timeLeft;
-    skipTimer.textContent = timeLeft;
-
-    const timer = setInterval(() => {
-        timeLeft--;
-        adTimer.textContent = timeLeft;
-        skipTimer.textContent = timeLeft;
-        if (timeLeft <= 0) {
-            clearInterval(timer);
-            skipAdButton.disabled = false;
-            skipAdButton.onclick = () => {
-                if (hdVideoUrl) {
-                    const link = document.createElement("a");
-                    link.href = hdVideoUrl;
-                    link.download = "";
-                    link.target = "_blank";
-                    link.click();
-                    hdAdOverlay.style.display = "none";
-                }
-            };
-        }
-    }, 1000);
+function downloadHd() {
+    if (hdVideoUrl) {
+        const link = document.createElement("a");
+        link.href = hdVideoUrl;
+        link.download = "";
+        link.target = "_blank";
+        link.click();
+    }
 }
