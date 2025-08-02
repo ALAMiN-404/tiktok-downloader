@@ -40,7 +40,7 @@ def download():
             audio_url = result["data"].get("music")
             thumbnail = result["data"].get("cover")
             info = {
-                "id": result["data"].get("id", "N/A"),
+                "name": result["data"].get("name", "N/A"),
                 "title": result["data"].get("title", "N/A"),
                 "description": result["data"].get("desc", "N/A")
             }
