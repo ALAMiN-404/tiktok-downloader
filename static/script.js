@@ -85,6 +85,15 @@ function toggleDrawer() {
     drawer.classList.toggle("open");
 }
 
+// বন্ধ করার জন্য ড্রয়ারের বাইরে ক্লিক করলে
+document.addEventListener("click", function (event) {
+    const drawer = document.getElementById("sideDrawer");
+    const menuIcon = document.querySelector(".menu-icon");
+    if (!drawer.contains(event.target) && !menuIcon.contains(event.target) && drawer.classList.contains("open")) {
+        drawer.classList.remove("open");
+    }
+});
+
 function toggleTheme() {
     alert("Theme toggle feature coming soon!");
 }
